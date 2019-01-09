@@ -5,7 +5,8 @@ enum custom_keycodes {
     PLACEHOLDER = SAFE_RANGE,
     LOCK_SCREEN,
     BRT_UP,
-    BRT_DN
+    BRT_DN,
+    EMOJI
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -17,6 +18,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LSFT(SS_LALT(SS_TAP(X_F1))));
             case BRT_DN:
                 SEND_STRING(SS_LSFT(SS_LALT(SS_TAP(X_F2))));
+            case EMOJI:
+                SEND_STRING(SS_LCTRL(SS_LGUI(" ")));
         return false;
         }
     }
@@ -44,19 +47,19 @@ ________________________________________________________________________________
 |  SHIFT  |  SHIFT |   Z    |   X    |   C    |   V    |   B    |   N    |   M    |   <    |    >   |   ?    |       SHIFT    |   UP   |   1    |   2    |   3    | ENTER  |
 |_________|________|________|________|________|________|________|________|________|________|________|________|________________|________|________|________|________|________|
 |          |          |          |                                                        |        |        |        |        |        |        |        |        |        |
-| CTRL     |   L ALT  | L GUI    |                      SPACE                             | R GUI  | R ALT  |  LOCK  |  LEFT  |  DOWN  | RIGHT  |   0    |   .    | ENTER  |
+| CTRL     |   L ALT  | L GUI    |                      SPACE                             | R GUI  | R ALT  |  EMOJI |  LEFT  |  DOWN  | RIGHT  |   0    |   .    | ENTER  |
 |__________|__________|__________|________________________________________________________|________|________|________|________|________|________|________|________|________|
 */
 
 
 
 	LAYOUT(
-    KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_MRWD,   KC_MPLY,   KC_MFFD,   KC_MCTL,   KC_F9,   KC_F10,  KC_F14,  KC_F15,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,  KC_HOME, KC_END, M(LOCK_SCREEN),
+    KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_MRWD,   KC_MPLY,   KC_MFFD,   KC_MCTL,   KC_F9,   KC_F10,  KC_F14,  KC_F15,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,  KC_HOME, KC_END, LOCK_SCREEN,
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_BSPC, KC_PPLS, KC_PSLS, KC_PAST, KC_PMNS,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,          KC_7,   KC_8,   KC_9,   KC_PGUP,
     MO(1), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,                    KC_4,   KC_5,   KC_6,   KC_PGDN,
-    KC_LSFT, KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   KC_1,   KC_2,   KC_3,   KC_PENT,
-    KC_LCTL, KC_LALT, KC_LGUI,                            KC_SPC,                             KC_RGUI, KC_RALT,   KC_LOCK,   KC_LEFT, KC_DOWN, KC_RGHT, KC_0,   KC_DOT, KC_PENT),
+    LSFT_T(KC_CAPS), LSFT_T(KC_CAPS), KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   KC_1,   KC_2,   KC_3,   KC_PENT,
+    KC_LCTL, KC_LALT, KC_LGUI,                            KC_SPC,                             KC_RGUI, KC_RALT,   EMOJI,   KC_LEFT, KC_DOWN, KC_RGHT, KC_0,   KC_DOT, KC_PENT),
 
 
 
@@ -75,7 +78,7 @@ ________________________________________________________________________________
 |              |        |        |        |        |        |        |        |        |        |        |        |                    |        |        |        |        |
 |______________|________|________|________|________|________|________|________|________|________|________|________|____________________|________|________|________|________|
 |         |        |        |        |        |        |        |        |        |        |        |        |                |   PG   |        |        |        |        |
-| SFT_T(KC_CAPS)   |        |        |        |        |        |        |        |        |        |        |                |   UP   |        |        |        |        |
+|         |        |        |        |        |        |        |        |        |        |        |        |                |   UP   |        |        |        |        |
 |_________|________|________|________|________|________|________|________|________|________|________|________|________________|________|________|________|________|________|
 |          |          |          |                                                        |        |        |        |        |   PG   |        |        |        |        |
 |          |          |          |                                                        |        |        |        |  HOME  |   DN   |   END  |        |        |        |
@@ -89,7 +92,7 @@ BL_TOGG, BL_DEC, BL_INC changes the in-switch LEDs
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, M(BRT_UP),
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, M(BRT_DN),
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______,
-    SFT_T(KC_CAPS), SFT_T(KC_CAPS), _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,  KC_PGUP, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,  KC_PGUP, _______, _______, _______, _______,
     _______, _______, _______,                            _______,                            _______, _______, _______, KC_HOME, KC_PGDN, KC_END, _______, _______, _______),
 };
 
